@@ -1,0 +1,70 @@
+package emailapp;
+import java.util.Scanner;
+
+public class Email {
+
+	private String firstName;
+	private String lastName;
+	private String password;
+	private String department;
+	private String email;
+	private int mailboxCap = 500;
+	private int defaultPasswordLength;
+	private String alternateEmail;
+	private String companySuffix = "elitestock.com";
+	
+	//constructor to receive first and last name 
+	public Email(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		System.out.println("Profile Created, " +this.firstName +" " +this.lastName);
+		this.department = setDepartment(); //select department 
+		email = firstName.toLowerCase () + "." + lastName.toLowerCase() + "@" + department +"." + companySuffix; //generate email				
+		this.password = randomPassword (8); //chooses random password			
+	}
+	
+	//ask for department 
+	private String setDepartment () {
+		System.out.println("Department Codes \n1 for Sales \n2 for Development\n3 for Accounting \n0 for Administration.\nSelect Number:");
+		Scanner in = new Scanner (System.in);
+		int depChoice = in.nextInt();
+		if (depChoice == 1) {return "sales";}
+		else if (depChoice == 2) {return "devs";}
+		else if (depChoice == 3) {return "acct";}
+		else {return "admin";}
+	}
+			
+	//generate random password
+    private String randomPassword (int length) {
+	    String passwordSet = "ABCDEFGH123456789!@#%$";
+	    char[] password = new char [length]; 
+	    for (int i=0; i<length; i++) {
+		int rand = (int)(Math.random() * passwordSet.length());
+		password [i] = passwordSet.charAt(rand);
+	}
+	return new String(password);
+}
+
+	//set mailbox capacity 
+    public void setMailboxCap (int capacity) {
+    	this.mailboxCap = capacity;
+    } 
+    
+    //change password 
+    public void changePassword (String password) {
+    	this.password = password; 
+    }
+    
+    //display mailbox capacity 
+    public int getMailboxCap() {return mailboxCap;}
+    public String getPassword () {return password;}
+    
+    //profile display
+    public String showInfo () {
+    	return "Account Holder: " +firstName +" " +lastName
+    			+"\nCompany Email: " + email
+    			+"\nTemporary Password: " +password
+    			+"\nMailbox Size: " +mailboxCap; 
+    }
+
+}
